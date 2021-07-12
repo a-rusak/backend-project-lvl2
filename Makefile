@@ -1,8 +1,21 @@
-install: npm install
+install: install-deps
 
-brain-games: node bin/gendiff.js
+run:
+	bin/gendiff.js
 
-publish: npm publish --dry-run
+install-deps:
+	npm ci
 
-make lint: npx eslint .
+test:
+	npm test
 
+test-coverage:
+	npm test -- --coverage --coverageProvider=v8
+
+lint:
+	npx eslint .
+
+publish:
+	npm publish
+
+.PHONY: test

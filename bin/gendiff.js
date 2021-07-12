@@ -18,5 +18,5 @@ program
 
 program.parse(process.argv);
 program.option('-V, --version', 'output the version number');
-program.option('-h, --help','output usage information');
-const options = program.opts();
+program.option('-h, --help', 'output usage information');
+// const options = program.opts();

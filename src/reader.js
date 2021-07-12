@@ -2,10 +2,8 @@ const path = require('path');
 const fs = require('fs');
 
 const parserMapping = {
-  ['.json'](buf) {
-    return JSON.parse(buf.toString('utf8'));
-  }
-}
+  '.json': (buf) => JSON.parse(buf.toString('utf8')),
+};
 
 exports.fetchJson = (fileName) => {
   const ext = path.extname(fileName);
@@ -13,7 +11,7 @@ exports.fetchJson = (fileName) => {
 
   // TODO: error handling
   try {
-    return parserMapping[ext](buf)
+    return parserMapping[ext](buf);
   } catch (err) {
     throw new Error(err);
   }

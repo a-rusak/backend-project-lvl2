@@ -19,4 +19,4 @@ exports.compareMapping = {
     name: 'diffValueSecond',
     sign: '+',
   },
-}
+};
