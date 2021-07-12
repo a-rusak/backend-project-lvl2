@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
 const { Command } = require('commander');
-const { fetchJson } = require('../src/reader');
-const { getDiff } = require('../src/diff');
-const { print } = require('../src/printer');
+
+const { getFormattedDiff } = require('../index');
 
 const program = new Command();
 program.version('0.0.1');
@@ -13,10 +12,8 @@ program.option('-f, --format <type>', 'output format');
 program
   .arguments('<file1> <file2>')
   .action((name1, name2) => {
-    const o1 = fetchJson(name1);
-    const o2 = fetchJson(name2);
-    const diffArr = getDiff(o1, o2);
-    console.log(print(diffArr));
+    const str = getFormattedDiff(name1, name2);
+    console.log(str);
   });
 
 program.parse(process.argv);
