@@ -1,5 +1,4 @@
-const _ = require('lodash');
-
+/* eslint-disable no-param-reassign */
 const {
   compareMapping: {
     IN_SECOND_ONLY, EQUAL, IN_FIRST_ONLY, DIFF_VALUE, DIFF_VALUE_SECOND,
@@ -36,7 +35,6 @@ exports.getDiff = (o1, o2) => {
         }
       });
       if (isPrimitive(body1)) {
-        // console.log(key, value);
         if (obj2[key] === undefined) {
           v.$type = IN_FIRST_ONLY;
         } else if (obj2[key].$body === body1) {
@@ -100,29 +98,6 @@ exports.getDiff = (o1, o2) => {
   // console.log(JSON.stringify(entries, null, 2));
 
   const flatDeep = (arr) => arr.reduce((acc, [key, value]) => {
-    // FIXME: missed $bodySecond on group1/nest key due to value.$body is an Array
-    // if (isPrimitive(value.$body)) {
-    //   const records = [[key, value]];
-    //   if (value.$bodySecond !== undefined) {
-    //     records.push([key, {
-    //       $type: DIFF_VALUE_SECOND,
-    //       $depth: value.$depth,
-    //       $body: value.$bodySecond,
-    //     }]);
-    //   }
-    //   return [
-    //     ...acc,
-    //     ...records,
-    //   ];
-    // }
-    // return [
-    //   ...acc,
-    //   [key, {
-    //     $type: value.$type,
-    //     $depth: value.$depth,
-    //   }],
-    //   ...flatDeep(value.$body),
-    // ];
     const records = [];
     const recordsToFlat = [];
     if (isPrimitive(value.$body)) {
@@ -140,14 +115,12 @@ exports.getDiff = (o1, o2) => {
     }
     if (value.$bodySecond !== undefined) {
       if (isPrimitive(value.$bodySecond)) {
-        console.log(key, value.$bodySecond);
         records.push([key, {
           $type: DIFF_VALUE_SECOND,
           $depth: value.$depth,
           $body: value.$bodySecond,
         }]);
       } else {
-        console.log('!!!!!');
         recordsToFlat.push([key, {
           $type: value.$type,
           $depth: value.$depth,
