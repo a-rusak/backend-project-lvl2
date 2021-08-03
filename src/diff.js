@@ -95,7 +95,7 @@ exports.getDiff = (o1, o2) => {
 
   sortDeep(entries);
 
-  // console.log(JSON.stringify(entries, null, 2));
+  console.log(JSON.stringify(entries, null, 2));
 
   const flatDeep = (arr) => arr.reduce((acc, [key, value]) => {
     const records = [];
