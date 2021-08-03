@@ -31,5 +31,5 @@ exports.formatToString = (arr) => {
     const indent = ' '.repeat($depth * 4 - 2) + ($type ? `${signMapping[$type]} ` : '  ');
     return `${getCloseBrackets(lastDepth, $depth).join('')}\n${indent}${key}: ${$body === undefined ? '{' : $body}${isLastIndex ? `${getCloseBrackets(lastDepth - 2, $depth - 1).join('')}` : ''}`;
   }, []);
-  return `{${strings.join('')}\n}`;
+  return `{${strings.join('')}\n}\n`;
 };
