@@ -1,6 +1,6 @@
 const { parse } = require('./src/parsers');
 const { getDiff } = require('./src/diff');
-const formatter = require('./src/formatter');
+const formatter = require('./src/formatters');
 
 exports.getFormattedDiff = (name1, name2, format = 'stylish') => {
   const o1 = parse(name1);

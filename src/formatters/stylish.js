@@ -2,7 +2,7 @@ const {
   compareMapping: {
     IN_SECOND_ONLY, EQUAL, IN_FIRST_ONLY, DIFF_VALUE, DIFF_VALUE_SECOND,
   },
-} = require('./compareMapping');
+} = require('../compareMapping');
 
 const stylish = (arr) => {
   const signMapping = {
@@ -34,6 +34,4 @@ const stylish = (arr) => {
   return `{${strings.join('')}\n}\n`;
 };
 
-module.exports = {
-  stylish,
-};
+module.exports = stylish;

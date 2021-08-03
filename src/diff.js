@@ -72,6 +72,18 @@ exports.getDiff = (o1, o2) => {
 
   // console.log(JSON.stringify(n1, null, 2));
 
+  const addPath = (arr, path = []) => {
+    arr.forEach(([key, value]) => {
+      value.$path = [...path, key];
+      if (!isPrimitive(value.$body)) {
+        addPath(Object.entries(value.$body), value.$path);
+      }
+    });
+  };
+  addPath(Object.entries(n1));
+
+  // console.log(JSON.stringify(n1, null, 2));
+
   const toEntriesDeep = (arr) => arr.map(([key, value]) => {
     if (!isPrimitive(value.$body)) {
       return [key, {
@@ -114,12 +126,14 @@ exports.getDiff = (o1, o2) => {
       records.push([key, {
         $type: value.$type,
         $depth: value.$depth,
+        $path: value.$path,
         $body: value.$body,
       }]);
     } else {
       recordsToFlat.push([key, {
         $type: value.$type,
         $depth: value.$depth,
+        $path: value.$path,
       }],
       ...flatDeep(value.$body));
     }
@@ -128,12 +142,14 @@ exports.getDiff = (o1, o2) => {
         records.push([key, {
           $type: DIFF_VALUE_SECOND,
           $depth: value.$depth,
+          $path: value.$path,
           $body: value.$bodySecond,
         }]);
       } else {
         recordsToFlat.push([key, {
           $type: value.$type,
           $depth: value.$depth,
+          $path: value.$path,
         }],
         ...flatDeep(value.$bodySecond));
       }

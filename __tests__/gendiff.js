@@ -12,6 +12,14 @@ test('Show diff for two json files with deep structure', () => {
   expect(calculatedDiff).toBe(expectedDiff);
 });
 
+test('Show diff for two json files with deep structure with plain formatting', () => {
+  const expectedDiff = fs
+    .readFileSync(path.resolve('__fixtures', 'files3-4.plain.diff.txt'))
+    .toString('utf8');
+  const calculatedDiff = getFormattedDiff('file3.json', 'file4.json', 'plain');
+  expect(calculatedDiff).toBe(expectedDiff);
+});
+
 test('Show diff for two yaml files with flat structure', () => {
   expect(getFormattedDiff('file1.yml', 'file2.yml')).toBe(`{
   - follow: false
