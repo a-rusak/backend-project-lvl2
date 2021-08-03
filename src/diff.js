@@ -96,7 +96,6 @@ exports.getDiff = (o1, o2) => {
       }
       return 0;
     });
-    console.log(JSON.stringify(arr, null, 2));
     arr.forEach(([, value]) => {
       if (!isPrimitive(value.$body)) {
         sortDeep(value.$body);
