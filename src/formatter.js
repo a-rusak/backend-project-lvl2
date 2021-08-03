@@ -4,7 +4,7 @@ const {
   },
 } = require('./compareMapping');
 
-exports.formatToString = (arr) => {
+const stylish = (arr) => {
   const signMapping = {
     [IN_SECOND_ONLY]: '+',
     [EQUAL]: ' ',
@@ -32,4 +32,8 @@ exports.formatToString = (arr) => {
     return `${getCloseBrackets(lastDepth, $depth).join('')}\n${indent}${key}: ${$body === undefined ? '{' : $body}${isLastIndex ? `${getCloseBrackets(lastDepth - 2, $depth - 1).join('')}` : ''}`;
   }, []);
   return `{${strings.join('')}\n}\n`;
+};
+
+module.exports = {
+  stylish,
 };
