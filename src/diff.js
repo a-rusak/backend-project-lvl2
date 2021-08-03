@@ -85,7 +85,19 @@ exports.getDiff = (o1, o2) => {
   const entries = toEntriesDeep(Object.entries(n1));
 
   const sortDeep = (arr) => {
-    arr.sort((a, b) => a[0] > b[0]);
+    arr.sort((a, b) => {
+      const nameA = a[0].toUpperCase(); // ignore upper and lowercase
+      const nameB = b[0].toUpperCase(); // ignore upper and lowercase
+      console.log(nameA, nameB);
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+    console.log(JSON.stringify(arr, null, 2));
     arr.forEach(([, value]) => {
       if (!isPrimitive(value.$body)) {
         sortDeep(value.$body);
@@ -95,7 +107,7 @@ exports.getDiff = (o1, o2) => {
 
   sortDeep(entries);
 
-  console.log(JSON.stringify(entries, null, 2));
+  // console.log(JSON.stringify(entries, null, 2));
 
   const flatDeep = (arr) => arr.reduce((acc, [key, value]) => {
     const records = [];
