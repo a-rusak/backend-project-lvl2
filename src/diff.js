@@ -20,7 +20,59 @@ const prepareObj = (obj) => Object
     },
   }), {});
 
-exports.getDiff = (o1, o2) => {
+const toEntriesDeep = (arr) => arr.map(([key, value]) => {
+  if (!isPrimitive(value.$body)) {
+    return [key, {
+      ...value,
+      $body: toEntriesDeep(Object.entries(value.$body)),
+    }];
+  }
+  return [key, value];
+});
+
+const flatDeep = (arr) => arr.reduce((acc, [key, value]) => {
+  const records = [];
+  const recordsToFlat = [];
+  if (isPrimitive(value.$body)) {
+    records.push([key, {
+      $type: value.$type,
+      $depth: value.$depth,
+      $path: value.$path,
+      $body: value.$body,
+    }]);
+  } else {
+    recordsToFlat.push([key, {
+      $type: value.$type,
+      $depth: value.$depth,
+      $path: value.$path,
+    }],
+    ...flatDeep(value.$body));
+  }
+  if (value.$bodySecond !== undefined) {
+    if (isPrimitive(value.$bodySecond)) {
+      records.push([key, {
+        $type: DIFF_VALUE_SECOND,
+        $depth: value.$depth,
+        $path: value.$path,
+        $body: value.$bodySecond,
+      }]);
+    } else {
+      recordsToFlat.push([key, {
+        $type: value.$type,
+        $depth: value.$depth,
+        $path: value.$path,
+      }],
+      ...flatDeep(value.$bodySecond));
+    }
+  }
+  return [
+    ...acc,
+    ...recordsToFlat,
+    ...records,
+  ];
+}, []);
+
+const getEntries = (o1, o2) => {
   const n1 = prepareObj(o1);
   const n2 = prepareObj(o2);
   // console.log(JSON.stringify(n2, null, 2));
@@ -84,16 +136,6 @@ exports.getDiff = (o1, o2) => {
 
   // console.log(JSON.stringify(n1, null, 2));
 
-  const toEntriesDeep = (arr) => arr.map(([key, value]) => {
-    if (!isPrimitive(value.$body)) {
-      return [key, {
-        ...value,
-        $body: toEntriesDeep(Object.entries(value.$body)),
-      }];
-    }
-    return [key, value];
-  });
-
   const entries = toEntriesDeep(Object.entries(n1));
 
   const sortDeep = (arr) => {
@@ -118,52 +160,14 @@ exports.getDiff = (o1, o2) => {
   sortDeep(entries);
 
   // console.log(JSON.stringify(entries, null, 2));
+  return entries;
+};
 
-  const flatDeep = (arr) => arr.reduce((acc, [key, value]) => {
-    const records = [];
-    const recordsToFlat = [];
-    if (isPrimitive(value.$body)) {
-      records.push([key, {
-        $type: value.$type,
-        $depth: value.$depth,
-        $path: value.$path,
-        $body: value.$body,
-      }]);
-    } else {
-      recordsToFlat.push([key, {
-        $type: value.$type,
-        $depth: value.$depth,
-        $path: value.$path,
-      }],
-      ...flatDeep(value.$body));
-    }
-    if (value.$bodySecond !== undefined) {
-      if (isPrimitive(value.$bodySecond)) {
-        records.push([key, {
-          $type: DIFF_VALUE_SECOND,
-          $depth: value.$depth,
-          $path: value.$path,
-          $body: value.$bodySecond,
-        }]);
-      } else {
-        recordsToFlat.push([key, {
-          $type: value.$type,
-          $depth: value.$depth,
-          $path: value.$path,
-        }],
-        ...flatDeep(value.$bodySecond));
-      }
-    }
-    return [
-      ...acc,
-      ...recordsToFlat,
-      ...records,
-    ];
-  }, []);
+exports.getDiff = (o1, o2) => {
+  const entries = getEntries(o1, o2);
 
-  const flatEntries = flatDeep(entries);
-
-  // console.log(JSON.stringify(flatEntries, null, 2));
-
-  return flatEntries;
+  return {
+    entries,
+    flatEntries: flatDeep(entries),
+  };
 };

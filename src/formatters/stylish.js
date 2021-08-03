@@ -4,7 +4,7 @@ const {
   },
 } = require('../compareMapping');
 
-const stylish = (arr) => {
+const stylish = ({ flatEntries }) => {
   const signMapping = {
     [IN_SECOND_ONLY]: '+',
     [EQUAL]: ' ',
@@ -25,9 +25,9 @@ const stylish = (arr) => {
     return closeBrackets;
   };
 
-  const strings = arr.map(([key, { $body, $type, $depth }], idx) => {
-    const isLastIndex = arr.length - 1 === idx;
-    const lastDepth = arr[idx - (idx > 0 ? 1 : 0)][1].$depth;
+  const strings = flatEntries.map(([key, { $body, $type, $depth }], idx) => {
+    const isLastIndex = flatEntries.length - 1 === idx;
+    const lastDepth = flatEntries[idx - (idx > 0 ? 1 : 0)][1].$depth;
     const indent = ' '.repeat($depth * 4 - 2) + ($type ? `${signMapping[$type]} ` : '  ');
     return `${getCloseBrackets(lastDepth, $depth).join('')}\n${indent}${key}: ${$body === undefined ? '{' : $body}${isLastIndex ? `${getCloseBrackets(lastDepth - 2, $depth - 1).join('')}` : ''}`;
   }, []);
