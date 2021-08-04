@@ -1,8 +1,8 @@
+import compareMapping from '../compareMapping.js';
+
 const {
-  compareMapping: {
-    IN_SECOND_ONLY, EQUAL, IN_FIRST_ONLY, DIFF_VALUE, DIFF_VALUE_SECOND,
-  },
-} = require('../compareMapping');
+  IN_SECOND_ONLY, EQUAL, IN_FIRST_ONLY, DIFF_VALUE, DIFF_VALUE_SECOND,
+} = compareMapping;
 
 const stylish = ({ flatEntries }) => {
   const signMapping = {
@@ -34,4 +34,4 @@ const stylish = ({ flatEntries }) => {
   return `{${strings.join('')}\n}\n`;
 };
 
-module.exports = stylish;
+export default stylish;

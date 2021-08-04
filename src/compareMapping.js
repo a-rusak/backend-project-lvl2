@@ -1,4 +1,4 @@
-exports.compareMapping = {
+export default {
   EQUAL: 'equal',
   IN_FIRST_ONLY: 'inFirstOnly',
   IN_SECOND_ONLY: 'inSecondOnly',

@@ -1,8 +1,8 @@
+import compareMapping from '../compareMapping.js';
+
 const {
-  compareMapping: {
-    IN_SECOND_ONLY, EQUAL, IN_FIRST_ONLY, DIFF_VALUE, DIFF_VALUE_SECOND,
-  },
-} = require('../compareMapping');
+  IN_SECOND_ONLY, EQUAL, IN_FIRST_ONLY, DIFF_VALUE, DIFF_VALUE_SECOND,
+} = compareMapping;
 
 const plain = ({ flatEntries }) => {
   const textMapping = {
@@ -32,4 +32,4 @@ const plain = ({ flatEntries }) => {
   return `${strings.join('')}`;
 };
 
-module.exports = plain;
+export default plain;

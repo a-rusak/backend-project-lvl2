@@ -1,8 +1,8 @@
-const stylish = require('./stylish');
-const plain = require('./plain');
-const json = require('./json');
+import stylish from './stylish.js';
+import plain from './plain.js';
+import json from './json.js';
 
-module.exports = {
+export default {
   stylish,
   plain,
   json,

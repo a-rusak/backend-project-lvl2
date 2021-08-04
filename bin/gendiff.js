@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const { Command } = require('commander');
+import { Command } from 'commander/esm.mjs';
 
-const { getFormattedDiff } = require('../index');
+import getFormattedDiff from '../index.js';
 
 const program = new Command();
 program.version('0.0.1');

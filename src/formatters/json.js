@@ -1,3 +1,3 @@
-const json = ({ entries }) => `${JSON.stringify(entries)}\n`;
+const json = ({ entries }) => `${JSON.stringify(entries)}`;
 
-module.exports = json;
+export default json;

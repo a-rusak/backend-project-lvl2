@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
+import compareMapping from './compareMapping.js';
+
 const {
-  compareMapping: {
-    IN_SECOND_ONLY, EQUAL, IN_FIRST_ONLY, DIFF_VALUE, DIFF_VALUE_SECOND,
-  },
-} = require('./compareMapping');
+  IN_SECOND_ONLY, EQUAL, IN_FIRST_ONLY, DIFF_VALUE, DIFF_VALUE_SECOND,
+} = compareMapping;
 
 const isPrimitive = (v) => typeof v === 'string'
   || typeof v === 'number'
@@ -163,11 +163,13 @@ const getEntries = (o1, o2) => {
   return entries;
 };
 
-exports.getDiff = (o1, o2) => {
+function getDiff(o1, o2) {
   const entries = getEntries(o1, o2);
 
   return {
     entries,
     flatEntries: flatDeep(entries),
   };
-};
+}
+
+export default getDiff;

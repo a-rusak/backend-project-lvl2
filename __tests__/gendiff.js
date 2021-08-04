@@ -1,29 +1,26 @@
-const { test, expect } = require('@jest/globals');
+import { test, expect } from '@jest/globals';
 
-const fs = require('fs');
-const path = require('path');
-const { getFormattedDiff } = require('../index');
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import getFormattedDiff from '../index.js';
 
 describe('Show diff for:', () => {
   test('json files with deep structure with default formatting', () => {
-    const expectedDiff = fs
-      .readFileSync(path.resolve('__fixtures', 'files3-4.diff.txt'))
+    const expectedDiff = readFileSync(resolve('__fixtures__', 'files3-4.diff.txt'))
       .toString('utf8');
     const calculatedDiff = getFormattedDiff('file3.json', 'file4.json');
     expect(calculatedDiff).toBe(expectedDiff);
   });
 
   test('json files with deep structure with plain formatting', () => {
-    const expectedDiff = fs
-      .readFileSync(path.resolve('__fixtures', 'files3-4.plain.diff.txt'))
+    const expectedDiff = readFileSync(resolve('__fixtures__', 'files3-4.plain.diff.txt'))
       .toString('utf8');
     const calculatedDiff = getFormattedDiff('file3.json', 'file4.json', 'plain');
     expect(calculatedDiff).toBe(expectedDiff);
   });
 
   test('json files with deep structure with json formatting', () => {
-    const expectedDiff = fs
-      .readFileSync(path.resolve('__fixtures', 'files3-4.json.diff.txt'))
+    const expectedDiff = readFileSync(resolve('__fixtures__', 'files3-4.json.diff.txt'))
       .toString('utf8');
     const calculatedDiff = getFormattedDiff('file3.json', 'file4.json', 'json');
     expect(calculatedDiff).toBe(expectedDiff);
