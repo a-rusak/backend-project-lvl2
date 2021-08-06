@@ -25,9 +25,12 @@ const stylish = ({ flatEntries }) => {
     return closeBrackets;
   };
 
-  const strings = flatEntries.map(([key, { $body, $type, $depth }], idx) => {
+  const strings = flatEntries.map(([key, {
+    $body, $type, $depth, $path,
+  }], idx) => {
     const isLastIndex = flatEntries.length - 1 === idx;
     const lastDepth = flatEntries[idx - (idx > 0 ? 1 : 0)][1].$depth;
+    console.log(idx, key, $path, $type);
     const indent = ' '.repeat($depth * 4 - 2) + ($type ? `${signMapping[$type]} ` : '  ');
     return `${getCloseBrackets(lastDepth, $depth).join('')}\n${indent}${key}: ${$body === undefined ? '{' : $body}${isLastIndex ? `${getCloseBrackets(lastDepth - 2, $depth - 1).join('')}` : ''}`;
   }, []);

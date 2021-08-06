@@ -1,5 +1,5 @@
 import { load } from 'js-yaml';
-import { extname, resolve } from 'path';
+import { extname } from 'path';
 import { readFileSync } from 'fs';
 
 const parserMapping = {
@@ -10,7 +10,7 @@ const parserMapping = {
 
 function parse(fileName) {
   const ext = extname(fileName);
-  const buf = readFileSync(resolve('__fixtures__', fileName));
+  const buf = readFileSync(fileName);
 
   // TODO: error handling
   try {
